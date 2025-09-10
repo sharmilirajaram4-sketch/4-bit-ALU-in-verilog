@@ -1,0 +1,23 @@
+// 4-bit ALU (Arithmetic Logic Unit)
+module alu(
+    input [3:0] A, B,       // 4-bit inputs
+    input [2:0] ALU_Sel,    // ALU operation select
+    output reg [3:0] ALU_Out,
+    output reg CarryOut
+);
+
+always @(*) begin
+    case(ALU_Sel)
+        3'b000: {CarryOut, ALU_Out} = A + B;      // Addition
+        3'b001: {CarryOut, ALU_Out} = A - B;      // Subtraction
+        3'b010: {CarryOut, ALU_Out} = A & B;      // AND
+        3'b011: {CarryOut, ALU_Out} = A | B;      // OR
+        3'b100: {CarryOut, ALU_Out} = A ^ B;      // XOR
+        3'b101: {CarryOut, ALU_Out} = {1'b0, ~A}; // NOT
+        3'b110: {CarryOut, ALU_Out} = A << 1;     // Shift Left
+        3'b111: {CarryOut, ALU_Out} = A >> 1;     // Shift Right
+        default: {CarryOut, ALU_Out} = 5'b00000;
+    endcase
+end
+
+endmodule
